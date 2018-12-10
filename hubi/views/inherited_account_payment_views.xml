@@ -29,8 +29,7 @@
             <field name="inherit_id" ref="account.view_account_payment_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='payment_date']" position="after">
-                    <field name="payment_mode_id"  attrs="{'readonly': [('state', '!=', 'draft')] , 'invisible': [('payment_type', '=', 'transfer')]}"  domain="[('company_id', '=',company_id)]"/>
-                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" />
+                    <field name="payment_mode_id"  attrs="{'readonly': [('state', '!=', 'draft')] , 'invisible': [('payment_type', '=', 'transfer')]}"/>
                 </xpath> 
             </field>
         </record>
@@ -85,7 +84,6 @@
             <field name="arch" type="xml">
                 <tree string="Payment" default_order = "name" import="false" create="true">
                     <field name="name"/>
-                    <field name="company_id" groups="base.group_multi_company" />
                 </tree>
             </field>
         </record>
@@ -97,7 +95,6 @@
                 <form string="Payment">
                     <group>
                         <field name="name"/>
-                        <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" />
                     </group>
                 </form>
             </field>

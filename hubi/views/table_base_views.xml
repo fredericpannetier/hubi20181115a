@@ -115,7 +115,6 @@
                     <field name="default_value"/>
                     <field name="level"/>
                     <field name="main_level"/>
-                    <field name="company_id" groups="base.group_multi_company" />
                 </tree>
             </field>
     </record>
@@ -140,7 +139,7 @@
                             
                             <field name="level_partner" attrs="{'invisible': [('main_level', '!=', 'Partner')]}" />
                             <field name="level_product" attrs="{'invisible': [('main_level', '!=', 'Product')]}" />
-                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" />
+                            
                             <field name="reference"/>
                             <field name="default_value"/>
                             <field name="weight" attrs="{'invisible': [('level', '!=', 'Packaging')]}"/>
@@ -182,9 +181,7 @@
         <field name="view_type">form</field>            
         <field name="search_view_id" ref="family_product_search"/> 
         <field name="context">{'group_by':'level', 'default_main_level': 'Product'}</field>  
-        <!--<field name="domain">['&amp;',('main_level', '=', "Product"), '|',('company_id', '=', uid),('company_id','=',False)]</field>--> 
-        <field name="domain">[('main_level', '=', "Product")]</field>
-          
+        <field name="domain">[('main_level', '=', "Product")]</field>      
         <field name="view_mode">tree,form</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
@@ -195,6 +192,5 @@
             </p>
         </field>
     </record>
-
  
 </odoo>

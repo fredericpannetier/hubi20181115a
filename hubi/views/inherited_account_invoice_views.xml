@@ -68,7 +68,7 @@
         <field name="inherit_id" ref="account.view_account_invoice_filter_inherit_invoices"/>
         <field name="arch" type="xml">
 
-           <!-- <xpath expr="//filter[@name='invoices']" position="replace"> </xpath>-->
+            <xpath expr="//filter[@name='invoices']" position="replace"> </xpath>
             
             <xpath expr="//filter[@name='draft']" position="after"> 
                 <separator/>

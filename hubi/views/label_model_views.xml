@@ -9,7 +9,6 @@
                     <field name="name"/>
                     <field name="code"/>
                     <field name="file"/>
-                    <field name="with_ean128"/>
                 </tree>
             </field>
     </record>
@@ -31,7 +30,6 @@
                         <group>
                             <field name="code"/>
                             <field name="file"/>
-                            <field name="with_ean128"/>
                         </group>
                     </group>
                 </sheet>         

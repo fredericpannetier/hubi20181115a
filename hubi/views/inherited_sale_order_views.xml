@@ -8,33 +8,11 @@
         <field name="arch" type="xml">
             
             <xpath expr="//form/header/field[@name='state']" position="before">
-                <button name="action_search_products" type="object" string="Create Products" 
-                context="{'pricelist_id': pricelist_id}" class="oe_button oe_form_button oe_highlight" />  
-                
-                <button name="action_palletization" type="object" string="Palletization"  
-                class="oe_button oe_form_button oe_highlight" 
-                attrs="{'invisible': [('state', 'in', ['draft', 'sent', 'cancel'])]}"/>  
-                
-                <!-->
-                <field name="domain">[('state', 'not in', ('draft', 'sent', 'cancel'))]</field>
-                <button name="sale_order_lines_csv" type="object" string="CSV" context="{'order_id': id, 'partner_name': partner_id}" class="oe_button oe_form_button oe_highlight" />
-                -->
+                <button name="action_search_products" type="object" string="Create Products" context="{'pricelist_id': pricelist_id}" class="oe_button oe_form_button oe_highlight" />  
             </xpath>
             
             <xpath expr="//field[@name='validity_date']" position="before">
                 <field name="date_order"/>
-                <!-->
-                <a id="csv_download" href="#" target="_blank" download="file.csv"/>
-                <div id="csv_url_div" style="display:none"><field name="csv_url"/></div>
-                <script>
-                    $(document).ready(function(){
-                    var csv_url = $("#csv_url_div").text();
-                     $("#csv_download").attr("href", csv_url);
-                    });
-                </script> 
-                -->
-                
-                
             </xpath>
             <!-->
             <xpath expr="//field[@name='partner_shipping_id']" position="after">
@@ -78,11 +56,6 @@
             -->
             <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="replace"/>
             <xpath expr="//field[@name='order_line']/tree/field[@name='tax_id']" position="replace"/>
-            
-            <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="replace"/>
-            <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="after">
-                <field name="name" invisible="1" />
-            </xpath>
             
             <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
                 <field name="no_lot" />

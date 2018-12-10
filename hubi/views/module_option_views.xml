@@ -26,7 +26,6 @@
                 <field name="state"/>
                 <field name="description"/>
                 <field name="description_other"/>
-                <field name="company_id" groups="base.group_multi_company" />
             </tree>
         </field>
     </record>
@@ -49,7 +48,6 @@
                             <field name="state"/>
                             <field name="description"/>
                             <field name="description_other"/>
-                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" />
                         </group>
 
                     </group>
