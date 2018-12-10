@@ -52,12 +52,13 @@
                 </xpath>
             
                 <xpath expr="//page[@name='internal_notes']" position="before">
-                    <page name="characteristic" string="Characteristic" attrs="{'invisible': [('is_company', '=', True)]}">
+                    <!--<page name="characteristic" string="Characteristic" attrs="{'invisible': [('is_company', '=', True)]}">-->
+                    <page name="characteristic" string="Characteristic">
                     <group name="characteristic_row_1">
                         <group string="Various" name="carac_various">
                             <field name="ref" />
                             <field name="user_id" />
-                            <field name="sender_establishment" domain="[('is_company','=',1)]"  />
+                            <field name="sender_establishment" domain="[('is_company','=',1), ('customer','=',False), ('supplier','=',False)]" options="{'no_create': True}" />
                             <field name="carrier_id" />
                             
                             <field name="excluded_packaging" />
@@ -88,7 +89,8 @@
                 </xpath>
                 
                 <xpath expr="//page[@name='characteristic']" position="after">
-                    <page name="management" string="Management" attrs="{'invisible': [('is_company', '=', True)]}">
+                    <!--<page name="management" string="Management" attrs="{'invisible': [('is_company', '=', True)]}">-->
+                    <page name="management" string="Management" >
                     <group name="management_row_1">
                         <group string="Various" name="management_various">
                             <field name="shipping" invisible = "1"/>
@@ -111,7 +113,8 @@
                 </xpath>
                 
                 <xpath expr="//page[@name='management']" position="after">
-                    <page name="impression" string="Impression" attrs="{'invisible': [('is_company', '=', True)]}">
+                    <!--<page name="impression" string="Impression" attrs="{'invisible': [('is_company', '=', True)]}">-->
+                    <page name="impression" string="Impression">
                         <group name="impression_row">
                             <group name="impression_row_1">
                                 <field name="product_grouping" attrs="{'invisible': [('is_regr_prod_fac', '=', False)]}" />
@@ -133,7 +136,8 @@
                 </xpath>
                 
                 <xpath expr="//page[@name='impression']" position="after">
-                    <page name="etiquette" string="Etiquette" attrs="{'invisible': [('is_company', '=', True)]}">
+                    <!--<page name="etiquette" string="Etiquette" attrs="{'invisible': [('is_company', '=', True)]}">-->
+                    <page name="etiquette" string="Etiquette" >
                         <group name="etiquette_row">
                             <group name="etiquette_row_1">
                                 <field name="customer_name_etiq" />
@@ -170,7 +174,8 @@
                 </xpath>
                 
                 <xpath expr="//page[@name='etiquette']" position="after">
-                    <page name="EDI" string="EDI" attrs="{'invisible': ['|',('is_company', '=', True),'&amp;',('is_edi_facture', '=', False),('is_edi_transporteur', '=', False)]}">
+                    <!--<page name="EDI" string="EDI" attrs="{'invisible': ['|',('is_company', '=', True),'&amp;',('is_edi_facture', '=', False),('is_edi_transporteur', '=', False)]}">-->
+                    <page name="EDI" string="EDI" attrs="{'invisible': [('is_edi_facture', '=', False),('is_edi_transporteur', '=', False)]}">
                         <group name="EDI_invoice" string="EDI Invoice" attrs="{'invisible': [('is_edi_facture', '=', False)]}">
                             <group name="EDI_invoice_row_1">
                                 <field name="edi_invoice" />
@@ -204,18 +209,8 @@
                     </page>
                 </xpath>
 
-                <!--
-                <xpath expr="//page[@name='accounting']/group /group [@name='acc_sale']/field[@name='trust']" position="after">
-                    <field name="accounting_account_customer" attrs="{'invisible': [('is_export_compta', '=', False)]}"  />
-                    <field name="main_collective_customer"  attrs="{'invisible': [('is_export_compta', '=', False)]}" />
-                </xpath>
-                -->
                 <xpath expr="//page[@name='accounting']/group /group [@name='acc_purchase']/field[@name='property_supplier_payment_term_id']" position="after">
                     <field name="amount_com_kg" />
-                    <!--
-                    <field name="accounting_account_supplier" attrs="{'invisible': [('is_export_compta', '=', False)]}"  />
-                    <field name="main_collective_supplier" attrs="{'invisible': [('is_export_compta', '=', False)]}"  />
-                    -->
                 </xpath>
                  
                 <xpath expr="//page[@name='accounting']/group /group [@name='fiscal_information']/field[@name='property_account_position_id']" position="after">
@@ -228,14 +223,14 @@
                             <field name="company_city_etiq" />
                         </group>
                 </xpath>
-               
+              
                 <xpath expr="//page[@name='accounting']/group /group [@name='accounting_entries']/field[@name='property_account_receivable_id']" position="after">
-                    <field name="main_collective_customer"  attrs="{'invisible': [('is_export_compta', '=', False)]}" />
+                    <field name="auxiliary_account_customer"  groups="account.group_account_user" attrs="{'invisible': [('is_export_compta', '=', False)]}" />
                 </xpath>
                 <xpath expr="//page[@name='accounting']/group /group [@name='accounting_entries']/field[@name='property_account_payable_id']" position="after">
-                    <field name="main_collective_supplier"  attrs="{'invisible': [('is_export_compta', '=', False)]}" />
+                    <field name="auxiliary_account_supplier"  groups="account.group_account_user" attrs="{'invisible': [('is_export_compta', '=', False)]}" />
                 </xpath>
-                
+               
                 <xpath expr="//page[@name='etiquette']" position="after">
                     <page name="visibility" string="Visibilty" invisible="1">
                         <group>  
@@ -299,8 +294,19 @@
             <field name="res_model">res.partner</field>
             <field name="context">{"search_default_customer":1,'default_customer': 1,'default_supplier': 0, 'default_company_type': 'company'}</field>
             <field name="view_type">form</field>        
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,kanban</field>
         </record>
+        
+        <record id="action_hubi_partner_supplier" model="ir.actions.act_window" >
+            <field name="search_view_id" ref="search_res_partner_filter"/>
+            <field name="name">Suppliers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="context">{"search_default_supplier":1,'default_customer': 0,'default_supplier': 1, 'default_company_type': 'company'}</field>
+            <field name="view_type">form</field>        
+            <field name="view_mode">tree,form,kanban</field>
+        </record>
+
     
     
         <record id="search_establishment" model="ir.ui.view">
@@ -311,16 +317,16 @@
                    <field name="name"
                        filter_domain="['|','|',('display_name','ilike',self),('ref','=',self),('email','ilike',self)]"/>
                    <filter name="filter_my_establishments" help="My Establishments"
-                           domain="[('user_id','=',uid), ('is_company','=',1)]"/>
+                           domain="[('user_id','=',uid), ('is_company','=',1), ('customer','=',0), ('supplier','=',0)]"/>
                    <separator/>
                    
-                   <filter string="Customers" name="customer" domain="[('customer','=',1), ('parent_id', '=', False)]"/>
-                   <filter string="Vendors" name="supplier" domain="[('supplier','=',1), ('parent_id', '=', False)]"/>
+                   <!--<filter string="Customers" name="customer" domain="[('customer','=',1), ('parent_id', '=', False)]"/>
+                   <filter string="Vendors" name="supplier" domain="[('supplier','=',1), ('parent_id', '=', False)]"/>  -->
                    <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
                    <separator/>
                    <field name="category_id" string="Tag" filter_domain="[('category_id','ilike', self)]"/>
                    <field name="user_id"/>
-                   <field name="parent_id" domain="[('is_company','=',1)]" operator="child_of"/>
+                   <field name="parent_id" domain="[('is_company','=',1), ('customer','=',False), ('supplier','=',False)]" operator="child_of"/>
                    <group expand="0" name="group_by" string="Group By">
                        <filter name="salesperson" string="Salesperson" domain="[]" context="{'group_by' : 'user_id'}" />
                        <filter name="group_company" string="Company" context="{'group_by': 'parent_id'}"/>
@@ -525,9 +531,11 @@
                                 </form>
                             </field>
                         </page>
+                        
                         <page name='internal_notes' string="Internal Notes">
                             <field name="comment" placeholder="Internal note..."/>
                         </page>
+                        
                         <page name='sales_purchases' string="Sales &amp; Purchases">
                             <group name="container_row_2">
                                 <group string="Sale" name="sale">
@@ -556,13 +564,35 @@
                                 </group>
 
                             </group> 
+                            <!--
                             <group string="Etiquette">
                                     <field name="company_name_etiq" />
                                     <field name="company_city_etiq" /> 
+                                    <field name="etiq_mention" /> 
+                                    <field name="code_ean128" />   
+                                    <field name="compteur_ean128" />
                                     <field name="label_model_id" />   
                                     <field name="etiq_printer" />                     
-                            </group>  
+                            </group> 
+                            -->
                         </page>
+                        
+                        <!--<xpath expr="//page[@name='sales_purchases']" position="after">-->
+                        <page name="etiquette" string="Etiquette" >
+                            <group name="etiquette_row">
+                                <field name="company_name_etiq" />
+                                <field name="company_city_etiq" /> 
+                                <field name="etiq_mention" /> 
+                            </group>  
+                            <group name="etiquette_row_2">
+                            <field name="code_ean128" />   
+                                <field name="compteur_ean128" />
+                                <!--<field name="label_model_id" />   
+                                <field name="etiq_printer" />-->   
+                            </group>
+                        </page>
+                        <!--</xpath>-->
+                        
                     </notebook>
                 </sheet>
   
@@ -577,7 +607,7 @@
             <field name="context">{'default_is_company': 1,'default_customer': 0,'default_supplier': 0, 'default_company_type': 'company'}</field>
             <field name="search_view_id" ref="search_establishment"/>
             
-            <field name="domain">[('is_company', '=', True)]</field> 
+            <field name="domain">[('is_company', '=', True), ('customer','=',False), ('supplier','=',False)]</field> 
             <field name="view_type">form</field>        
             <field name="view_mode">tree,form</field>
             <field name="view_ids" eval="[(5, 0, 0),
