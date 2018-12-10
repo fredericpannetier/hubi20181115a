@@ -38,10 +38,10 @@
                     <field name="quantity" attrs="{'invisible':[('type', 'not in', ['product', 'consu'])]}"/>
                 </xpath>
                 
-                <xpath expr="//field[@name='tracking']" position="before">
+                <!--FP20181116 <xpath expr="//field[@name='tracking']" position="before">-->
                     <!--<field name="quantity" string="Quantity"/>-->
  
-                </xpath>            
+                <!--FP20181116 </xpath>            -->
             
                 <xpath expr="//page[@name='notes']" position="after">
                     <page name="characteristic" string="Characteristic" >

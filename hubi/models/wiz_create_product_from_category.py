@@ -133,7 +133,7 @@ class WizCreateProductFromCategory(models.TransientModel):
                 ('categ_id', '=', category),
                 ('caliber_id', '=', caliber_id), 
                 ('packaging_id', '=', False), 
-                ('type', '=', 'product'), ])         
+                ('type', '=', 'consu'), ])      #FP20181119   
             for compo in products_prod:
                 id_tmpl_compo = compo.id
             
@@ -155,7 +155,7 @@ class WizCreateProductFromCategory(models.TransientModel):
                     #'supplier_taxes_id': taxe_supplier_id,
                     'purchase_ok': True,
                     'sale_ok': False,
-                    'type': 'product',
+                    'type': 'consu',    #FP20181119
                     'tracking': 'lot',
                      }
                 product_tmpl_compo = self.env['product.template'].create(product_tmpl_compo_vals)

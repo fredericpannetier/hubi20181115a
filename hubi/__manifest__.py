@@ -8,7 +8,7 @@
 Gestion HUBI
 """,
     
-    'depends' : ['base','base_setup','product', 'analytic', 'web_planner','mail','mrp','sale','delivery'],
+    'depends' : ['base','base_setup','product','analytic','mail','sale'],
     'data': ["data/hubi_template_email.xml",
              "views/module_option_views.xml",
              "wizard/wiz_confirm_dialog_views.xml",
@@ -26,6 +26,7 @@ Gestion HUBI
              "views/inherited_account_payment_views.xml",
              "views/inherited_delivery_carrier_views.xml",
              #"views/inherited_account_view.xml",
+			 
              "reports/account_invoice_report_views.xml",
              "reports/sale_order_report_views.xml",
              "wizard/wiz_inherited_sale_advance_payment_views.xml",
@@ -50,7 +51,22 @@ Gestion HUBI
              "reports/account_invoice_hubi_report.xml",
              "reports/hubi_reports.xml",
              "security/hubi_security.xml",
-             "security/ir.model.access.csv"
+             "security/ir.model.access.csv",
+             "data/product.category.csv",
+             "data/res.country.state.csv",
+             "data/hubi.family.csv",
+             "data/res.partner.category.csv",
+             "data/res.partner.title.csv",
+             "data/hubi.payment_mode.csv",
+             #"data/product.template.csv",
+             #"data/delivery.carrier.csv",
+             #"data/mrp.bom.csv",
+             #"data/product.pricelist.csv",
+             "data/hubi.module_option.csv",
+             "data/hubi.labelmodel.csv",
+             "data/hubi.printer.csv",
+             #"data/hubi.parameter.csv",
+             #"data/res.partner.csv",
              
     ],
     'qweb': ['static/src/xml/qweb.xml'],
