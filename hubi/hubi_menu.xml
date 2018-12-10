@@ -43,14 +43,14 @@
             -->
             
 			<menuitem id="menu_hubi_report_billing" name="Report Billing" sequence="30" parent="menu_hubi_billing" />
-				<menuitem id="menu_hubi_FEC_report" sequence="10" parent="menu_hubi_report_billing" action="l10n_fr_fec.account_fr_fec_action"  />
+				<!--<menuitem id="menu_hubi_FEC_report" sequence="10" parent="menu_hubi_report_billing" action="l10n_fr_fec.account_fr_fec_action"  />-->
 				<menuitem id="menu_hubi_invoice_report" name="Invoice Analysis" sequence="20" parent="menu_hubi_report_billing" />
 					<menuitem id="menu_hubi_invoice_report_price" name="Analysis Price" sequence="10" parent="menu_hubi_invoice_report" action="account.action_account_invoice_report_all"  />
 					<menuitem id="menu_hubi_invoice_report_weight" name="Analysis Weight" sequence="20" parent="menu_hubi_invoice_report" action="hubi.action_hubi_invoice_report_weight"  />
 					<menuitem id="menu_hubi_invoice_report_detail" name="Analysis Detail" sequence="30" parent="menu_hubi_invoice_report" action="hubi.action_hubi_invoice_report_detail"  />
 					<menuitem id="menu_hubi_invoice_report_free" name="Analysis free Product" sequence="40" parent="menu_hubi_invoice_report" action="hubi.action_hubi_invoice_report_free"  />
 
-				<menuitem id="menu_hubi_account_report" name="Account Report" sequence="30" parent="menu_hubi_report_billing" />
+				<!--<menuitem id="menu_hubi_account_report" name="Account Report" sequence="30" parent="menu_hubi_report_billing" />
 					<menuitem id="menu_hubi_print_journal" sequence="10" parent="menu_hubi_account_report" action="account.action_account_print_journal_menu"  />
 					<menuitem id="menu_hubi_partner_ledger" sequence="20" parent="menu_hubi_account_report" action="account.action_account_partner_ledger_menu"  />
 					<menuitem id="menu_hubi_general_ledger" sequence="30" parent="menu_hubi_account_report" action="account.action_account_general_ledger_menu"  />
@@ -58,7 +58,7 @@
 					<menuitem id="menu_hubi_report_bs" sequence="50" parent="menu_hubi_account_report" action="account.action_account_report_bs"  />
 					<menuitem id="menu_hubi_report_pl" sequence="60" parent="menu_hubi_account_report" action="account.action_account_report_pl"  />
 					<menuitem id="menu_hubi_aged_balance" sequence="70" parent="menu_hubi_account_report" action="account.action_account_aged_balance_view"  />
-					<menuitem id="menu_hubi_account_tax_report" sequence="80" parent="menu_hubi_account_report" action="account.action_account_tax_report"  />
+					<menuitem id="menu_hubi_account_tax_report" sequence="80" parent="menu_hubi_account_report" action="account.action_account_tax_report"  />-->
 		
         <menuitem id="menu_hubi_master_datas" name="Master Datas" sequence="30" parent="menu_hubi" />
             <menuitem id="menu_hubi_customers" name="Customer" sequence="10" parent="menu_hubi_master_datas" action="hubi.action_hubi_partner_customer" />
@@ -82,7 +82,7 @@
 
         <menuitem id="menu_hubi_datas" name="Datas" sequence="80" parent="menu_hubi" />
             <!--<menuitem id="menu_hubi_shippers" name="Shipper" sequence="10" parent="menu_hubi_datas" action="hubi.action_hubi_shipper" />-->
-            <menuitem id="menu_hubi_shippers" name="Shipper" sequence="10" parent="menu_hubi_datas" action="delivery.action_delivery_carrier_form" />
+            <menuitem id="menu_hubi_shippers" name="Shipper" sequence="10" parent="menu_hubi_datas" action="hubi_delivery.action_delivery_carrier_form" />
             <menuitem id="menu_hubi_sales_team" name="Sales Team" sequence="10" parent="menu_hubi_datas" action="sales_team.sales_team_config_action" />
             
             <menuitem id="menu_hubi_datas_location" name="Locations" sequence="20" parent="menu_hubi_datas" />
@@ -121,14 +121,10 @@
     <record id="make_invisible" model="res.groups">
         <field name="name">Invisible</field>
     </record>
-    
+    <record model="ir.ui.menu" id="hubiBOM.menu_mrp_root">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
     <record model="ir.ui.menu" id="sale.sale_menu_root">
-        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
-    </record>
-    <record model="ir.ui.menu" id="stock.menu_stock_root">
-        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
-    </record>
-    <record model="ir.ui.menu" id="mrp.menu_mrp_root">
         <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
     </record>
     <record model="ir.ui.menu" id="account.menu_finance">
