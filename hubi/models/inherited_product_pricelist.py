@@ -109,19 +109,19 @@ class HubiProductPriceListItem(models.Model):
         products_templ = self.env['product.template'].search([('id', '=', self.product_tmpl_id.id)])            
         self.weight = ("%s") % (products_templ.weight)
 
-    @api.onchange('price_weight')
-    def _onchange_price_weight(self):
-        if (self.price_weight != 0) and (self.weight !=0):
-            self.fixed_price = self.price_weight * self.weight        
+    #@api.onchange('price_weight')
+    #def _onchange_price_weight(self):
+    #    if (self.price_weight != 0) and (self.weight !=0):
+    #        self.fixed_price = self.price_weight * self.weight        
 
         
-    @api.onchange('fixed_price')
-    def _onchange_price_total(self):
-        if self.weight != 0:
-            self.price_weight = self.fixed_price / self.weight
-        else:    
-            self.price_weight = self.fixed_price
-        self.price_weight = round(self.price_weight ,3)
+    #@api.onchange('fixed_price')
+    #def _onchange_price_total(self):
+    #    if self.weight != 0:
+    #        self.price_weight = self.fixed_price / self.weight
+    #    else:    
+    #        self.price_weight = self.fixed_price
+    #    self.price_weight = round(self.price_weight ,3)
 
     price_option = fields.Boolean(string='Price Option', default=False)
     price_color = fields.Selection([("#FF00FF", "magenta"),("#0000FF", "blue"),
