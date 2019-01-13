@@ -92,6 +92,12 @@ class HubiProductPriceListItem(models.Model):
         else:
             self.default_price = '0'            
 
+    @api.one
+    @api.depends('product_tmpl_id', 'product_id')
+    def _get_weight(self):
+        products_templ = self.env['product.template'].search([('id', '=', self.product_tmpl_id.id)])            
+        self.weight = ("%s") % (products_templ.weight)
+
     @api.onchange('price_ean13')
     def _onchange_barcode(self):
         # Test si code EAN13 correct
@@ -103,12 +109,7 @@ class HubiProductPriceListItem(models.Model):
                 cle_ean13 = tools_hubi.calcul_cle_code_ean13(self, self.price_ean13)
                 self.price_ean13 = tools_hubi.mid(self.price_ean13,0,12) + cle_ean13
 
-	@api.one
-    @api.depends('product_tmpl_id', 'product_id')
-    def _get_weight(self):
-        products_templ = self.env['product.template'].search([('id', '=', self.product_tmpl_id.id)])            
-        self.weight = ("%s") % (products_templ.weight)
-
+	
     #@api.onchange('price_weight')
     #def _onchange_price_weight(self):
     #    if (self.price_weight != 0) and (self.weight !=0):
@@ -154,6 +155,6 @@ class HubiProductPriceListItem(models.Model):
     is_tarif_code_interne=fields.Boolean(string='is_CODE_INTERNE', compute='_is_Visible', default=lambda self: self._default_is_Visible('TARIF_CODE_INTERNE'))
     is_tarif_ref_client=fields.Boolean(string='is_REF_CLIENT', compute='_is_Visible', default=lambda self: self._default_is_Visible('TARIF_REF_CLIENT'))
     is_tarif_lib_promo=fields.Boolean(string='is_LIB_PROMO', compute='_is_Visible', default=lambda self: self._default_is_Visible('TARIF_LIB_PROMO'))
-	
-    weight = fields.Float(string='Weight for this product', compute='_get_weight')
-    price_weight = fields.Float(string='Price Weight')
+
+    #weight = fields.Float(string='Weight for this product', compute='_get_weight')
+    #price_weight = fields.Float(string='Price Weight')
