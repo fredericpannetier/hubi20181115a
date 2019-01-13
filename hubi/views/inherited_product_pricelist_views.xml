@@ -106,8 +106,7 @@
                         <field name="price_option" attrs="{'invisible': [('is_tarif_option', '=', False)]}" />
                         <field name="price_ifls" string="IFLS" attrs="{'invisible': [('is_ifls', '=', False)]}" />
                         <field name="description_promo" attrs="{'invisible': [('is_tarif_lib_promo', '=', False)]}" />
-						<field name="weight" string="Weight for this product" attrs="{'invisible': [('applied_on', '!=','1_product')], 'readonly': True}"  />
-                        <field name="price_weight" string="Price Weight" attrs="{'invisible': [('applied_on', '!=','1_product')]}"  />
+                        
 
                     </group>
                     <group>
@@ -142,6 +141,8 @@
             <xpath expr="//field[@name='compute_price']" position="before">
                     <group>
                         <field name="default_price" string="Default Price" attrs="{'invisible': [('applied_on', '!=','1_product')], 'readonly': True}"  />
+                        <field name="weight" string="Weight for this product" attrs="{'invisible': [('applied_on', '!=','1_product')], 'readonly': True}"  />
+                        <field name="price_weight" string="Price Weight" attrs="{'invisible': [('applied_on', '!=','1_product')]}"  />
                     </group> 
             </xpath>
             
