@@ -67,23 +67,26 @@ class Wizard_productprice(models.TransientModel):
             categ_code = self.category_id.id 
             company_code = p.company_id.id
             query_args = {'product_code': product_code,'categ_code' : categ_code, 'company_id' : company_code}
-            query = """SELECT  Product_template.id, Product_template.list_price, barcode  
+            query = """SELECT  Product_template.id, Product_template.list_price, barcode,
+                        case Product_template.weight when 0 then Product_template.list_price 
+                            else round(Product_template.list_price/Product_template.weight,3) end  as price_w   
                         FROM Product_template 
                         inner join product_product on product_product.product_tmpl_id = Product_template.id
                         WHERE categ_id = %(categ_code)s 
-                        AND Product_template.type <> 'product' 
+                        AND Product_template.type <> 'service'
                         AND Product_template.company_id = %(company_id)s 
                         AND Product_template.id not in 
                         (SELECT product_tmpl_id FROM product_pricelist_item 
                         WHERE pricelist_id= %(product_code)s AND product_tmpl_id is not null) 
-                        AND Product_template.id not in 
+                        AND product_product.id not in 
                         (SELECT product_id FROM mrp_bom_line WHERE  product_id is not null)
                         ORDER BY Product_template.id"""
 
+
             self.env.cr.execute(query, query_args)
-            ids = [(r[0], r[1], r[2]) for r in self.env.cr.fetchall()]
+            ids = [(r[0], r[1], r[2], r[3]) for r in self.env.cr.fetchall()]
             
-            for categ, price, barcode in ids:
+            for categ, price_total, barcode, price_weight in ids:
                 price_vals = {
                     'pricelist_id':p.id,
                     'product_tmpl_id': categ,
@@ -92,7 +95,7 @@ class Wizard_productprice(models.TransientModel):
                     'compute_price':'fixed',
                     'sequence':'5',
                     'base':'list_price',
-                    'fixed_price': price,
+                    'fixed_price': price_total,
                     'price_discount':'0',
                     'price_max_margin':'0',
                     'percent_price':'0',
@@ -101,7 +104,8 @@ class Wizard_productprice(models.TransientModel):
                     'price_min_margin':'0',
                     'price_EAN13': barcode, 
                     'date_start': self.date_start,
-                    'date_end': self.date_end,               
+                    'date_end': self.date_end, 
+                    'price_weight': price_weight,
                      }
                 if self.env.context.get('tx_currency_id'):
                     price_vals['currency_id'] = self.env.context.get('tx_currency_id')
@@ -119,6 +123,7 @@ class Wizard_productprice(models.TransientModel):
                 "target":"new",
                 "res_model":"wiz.productprice"                
                 }
+
 
     
     @api.model
