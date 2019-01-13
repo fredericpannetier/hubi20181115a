@@ -109,10 +109,10 @@ class HubiProductPriceListItem(models.Model):
                 cle_ean13 = tools_hubi.calcul_cle_code_ean13(self, self.price_ean13)
                 self.price_ean13 = tools_hubi.mid(self.price_ean13,0,12) + cle_ean13
 
-    #@api.onchange('price_weight')
-    #def _onchange_price_weight(self):
-    #    if (self.price_weight != 0) and (self.weight !=0):
-    #        self.fixed_price = self.price_weight * self.weight        
+    @api.onchange('price_weight')
+    def _onchange_price_weight(self):
+        if (self.price_weight != 0) and (self.weight !=0):
+            self.fixed_price = self.price_weight * self.weight        
 
         
     #@api.onchange('fixed_price')
